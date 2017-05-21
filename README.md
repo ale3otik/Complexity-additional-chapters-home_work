@@ -1,2 +1,2 @@
-# Complexity-additional-chapters-home_work
+# Complexity-additional-chapters-home-work
 MIPT DM Complexity 6 sem
