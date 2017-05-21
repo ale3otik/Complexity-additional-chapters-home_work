@@ -1,0 +1,75 @@
+\documentclass[a4paper]{article}
+\usepackage[margin=1.0in]{geometry}
+
+\usepackage[l2tabu,orthodox]{nag}
+\usepackage{indentfirst}
+\usepackage{amssymb,amsfonts}
+\usepackage[]{mathtools}
+\usepackage{cmap}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{ucs}
+\usepackage[russian,english]{babel}
+\usepackage[babel = true]{microtype}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos, textsize=tiny]{todonotes}
+
+\usepackage{color}
+\definecolor{darkblue}{rgb}{0,0,.75}
+\definecolor{darkred}{rgb}{.7,0,0}
+\definecolor{darkgreen}{rgb}{0,.7,0}
+
+\usepackage[
+    draft = false,
+    unicode = true,
+    colorlinks = true,
+    allcolors = blue,
+    hyperfootnotes = true
+]{hyperref}
+\usepackage{amsmath}
+\usepackage{amsthm}
+    \theoremstyle{plain}
+    \newtheorem{theorem}{Теорема}
+    \newtheorem{task}{Задача}
+    \newtheorem{lemma}{Лемма}
+    \newtheorem{proposition}{Утверждение}
+    \newtheorem{corollary}{Следствие}
+    \theoremstyle{definition}
+    \newtheorem{definition}{Определение}
+    \newtheorem*{notation}{Обозначение}
+    \newtheorem{example}{Пример}
+        \newtheorem*{answer}{Ответ}
+    \newtheorem*{draft}{Черновик ответа}
+
+\title{Зачетные задачи}
+
+\author{Зотов Алексей 497}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{task}
+Построить систему интерактивных доказательств для языка \textsf{GI-NO-EQUAL-CLASSES} = $\{(G_1, \ldots G_m) \ |$  в разбиении этого набора графов на классы эквивалентности по отношению изоморфизма нет двух классов одинакового размера$\}$
+\end{task}
+\begin{answer}  
+    Мы уже знаем, что $\textsf{GNI} \in \mathbf{IP}$ и будем это использовать. Также $\textsf{GI} \in \mathbf{NP}$. $M = \{1,\ldots,m\}$
+    \item Рассмотрим такой протокол :
+    \begin{enumerate}
+        \item $\forall i \in 1,\ldots , m$  верификатор $V$ посылает пруверу $P$ индекс $i$ соответствующий $G_i$.
+        \item $P$ возвращает $X_i = \{(k,S_{ki}) | G_k \cong G_i\}$ - множество индексов графов, изоморфных $G_i$ и соответствующие сертификаты изоморфности. $X_i = (K_i,S_i)$ - обозначение.
+        \item $V$ проверяет полученные сертификаты. 
+        \item $\forall j : j \notin K_i$ верификатор $V$ инициирует протокол проверки, что $G_i \ncong G_j$, причем вероятность ошибки $p_{ij} \leq \frac{1}{3m^2}$. 
+        \item Повторяется с пункта $(1)$, пропуская те индексы, для которых уже найден класс изоморфности.
+        \item $V$ проверяет, что все классы получились разного размера.
+    \end{enumerate}
+    Докажем, что алгоритм корректен: 
+    \begin{itemize}
+        \item если $(G_1, \ldots G_m) \in \textsf{GI-NO-EQUAL-CLASSES}$, тогда каждый на каждой итерации прувер будет действовать наилучшим образом, положительная проверка на изоморфность и неизоморфность проходит без ошибок (с вероятностью 1). 
+        \item если $(G_1, \ldots G_m) \notin \textsf{GI-NO-EQUAL-CLASSES}$, тогда $P$ не может неизоморфные графы отнести в один класс, но может попробовать изоморфные графы разбить по разным классам, воспользовавшись наличем ошибки при проверке $G_i \ncong G_j$. Таких проверок не больше $m^2$, значит $P_{err} \leq \sum p_{ij} \leq m^2 \cdot \frac{1}{3m^2} = \frac{1}{3}$.
+    \end{itemize}
+\end{answer}
+
+
+\end{document}
